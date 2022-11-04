@@ -11,29 +11,45 @@ const submitButton = document.getElementById("submit-button");
 const savedNote = document.getElementById("notes");
 
 // Entries array of objects with time and description keys
-let entries = [
+let entriesBlank = [
     { time: "9:00am", description: "" },
-    { time: "10:00am", description: "Here is some stuff" },
+    { time: "10:00am", description: "" },
     { time: "11:00am", description: "" },
     { time: "12:00pm", description: "" },
     { time: "1:00pm", description: "" },
     { time: "2:00pm", description: "" },
+    { time: '3:00 pm', description: "" },
+    { time: '4:00 pm', description: "" },
+    { time: '5:00 pm', description: "" },
 ];
 
-
-
-
-
-
-
+// takes in a key and returns its value
 function readLocalStorage(key) {
     return JSON.parse(localStorage.getItem(key));
 }
-
+// sets the value in local storage for the key
 function writeLocalStorage(key, value) {
     localStorage.setItem(key, JSON.stringify(value));
 }
 
+// if there is not an entry in the local storage
+let entries = readLocalStorage("entries");
+if (!entries) {
+    console.log("Nothing entered");
+    entries = entriesBlank;
+    writeLocalStorage("entries", entries)
+}
+
+// put the entries into the HTML
+for (let i = 0; i < entries.length; i++) {
+    addRow(i, entries[i]);
+}
+
+
+
+
+
+// Handling the button press/submit
 function submitClicked(event) {
     console.log("clicked");
     console.log(event.target);
@@ -79,6 +95,3 @@ function addRow(idx, entryObject) {
 
 
 
-for (let i = 0; i < entries.length; i++) {
-    addRow(i, entries[i]);
-}
